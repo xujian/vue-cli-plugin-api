@@ -1,0 +1,17 @@
+{
+  "name": "vue-cli-plugin-api",
+  "version": "0.0.4",
+  "description": "Vue-cli-3 plugin: api",
+  "main": "index.js",
+  "scripts": {},
+  "keywords": [
+    "api",
+    "vue-cli-plugin",
+    "vue",
+    "axios",
+    "vue",
+    "plugin"
+  ],
+  "author": "Mike Jian Xu",
+  "license": "MIT"
+}
