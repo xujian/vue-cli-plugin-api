@@ -1,13 +1,13 @@
 module.exports = (api, options, rootOptions) => {
     api.extendPackage({
-      devDependencies: {
+      dependencies: {
         axios: "^0.18.0"
       }
     });
   
     api.render(
       {
-        "./src/plugins/api.js": "./templates/plugins/api.js"
+        "./src/plugins/http/index.js": "./templates/plugins/http/index.js"
       },
       options
     );
@@ -20,7 +20,7 @@ module.exports = (api, options, rootOptions) => {
         let vueImportIndex = src.findIndex(line => line.match(/^import Vue/));
         let axiosImportIndex = src.findIndex(line => line.match(/\/plugins\/api/));
         if(axiosImportIndex < 0){
-          src.splice(++vueImportIndex, 0, "import './plugins/api'");
+          src.splice(++vueImportIndex, 0, "import './plugins/http'");
         }      
         return src;
       });
