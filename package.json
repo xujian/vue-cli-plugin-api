@@ -4,6 +4,9 @@
   "description": "Vue-cli-3 plugin: http",
   "main": "index.js",
   "scripts": {},
+  "dependencies": {
+    "vue-http": "xujian/vue-http"
+  },
   "keywords": [
     "api",
     "vue-cli-plugin",
