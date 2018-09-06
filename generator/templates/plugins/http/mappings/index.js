@@ -1,5 +1,5 @@
-import calls from './calls'
+import auth from './auth'
 
 export default [
-  calls
+  auth
 ]

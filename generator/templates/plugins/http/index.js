@@ -1,3 +1,4 @@
+import Vue from 'vue'
 import http from 'vue-http'
 import mappings from './mappings'
 
