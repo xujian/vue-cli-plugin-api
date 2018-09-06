@@ -7,7 +7,8 @@ module.exports = (api, options, rootOptions) => {
   
     api.render(
       {
-        "./src/plugins/http/index.js": "./templates/plugins/http/index.js"
+        "./src/plugins/http/index.js": "./templates/plugins/http/index.js",
+        "./src/plugins/http/mappings/auth.js": "./templates/plugins/http/mappings/auth.js"
       },
       options
     );
