@@ -1,6 +1,6 @@
 {
   "name": "vue-cli-plugin-http",
-  "version": "0.0.4",
+  "version": "1.0.5",
   "description": "Vue-cli-3 plugin: http",
   "main": "index.js",
   "scripts": {},
