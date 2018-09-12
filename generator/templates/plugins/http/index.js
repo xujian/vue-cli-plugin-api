@@ -1,4 +1,4 @@
-import http from 'vue-http'
+import http from 'vue-cli-plugin-http'
 import mappings from './mappings'
 
 let __config = {
