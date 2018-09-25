@@ -64,6 +64,8 @@ let __match = function (path) {
           }
         })
         mapped.hooks = api.hooks
+        mapped.boxing = api.boxing
+        mapped.unboxing = api.unboxing
         mappedQueries = queries
       } // if pattern
     }) // apis.forEach
@@ -153,7 +155,9 @@ let __call = (path, options) => {
       // 处理未匹配到的项 应用default值
       // 例如处理page_no, page_size默认值
       mapped.params.forEach((item, index) => {
-        if (item.value.startsWith('$') && item.default) {
+        if (item.value.constructor.name === 'String' && 
+            item.value.startsWith('$') && 
+            item.default) {
           request.data[item.name] = item.default
         }
       })
@@ -188,7 +192,8 @@ let __call = (path, options) => {
     // mapping中定义但未匹配到的值
     mapped.params.forEach((d, i) => {
       // 带有default值但未给定
-      if (d.value.startsWith('$')) {
+      if (d.value.constructor.name === 'String' && 
+        d.value.startsWith('$')) {
         if ('default' in d) {
           request.data[d.name] = d.default
         }
@@ -205,8 +210,10 @@ let __call = (path, options) => {
   Object.keys(options.data).forEach((key, index) => {
     request.data[key] = options.data[key]
   })
-  if (__config.boxing) {
-    request.data = __config.boxing.call(this, request.data)
+  // mapping里可定义boxing/unboxing
+  let boxing = mapped.boxing || __config.boxing
+  if (boxing) {
+    request.data = boxing.call(this, request.data)
   }
   console.info('(requests.data 发送真实数据)', request.data)
   if (mapped !== null) {
@@ -232,8 +239,9 @@ let __call = (path, options) => {
       /**
        * 1. unboxing, 2.fields mapping  3.converts
        **/
-      if (__config.unboxing) {
-        response = __config.unboxing.call(this, response)
+      let unboxing = mapped.unboxing || __config.unboxing
+      if (unboxing) {
+        response = unboxing.call(this, response)
       }
       // 处理后台异常
       if (response.code === '0') {
@@ -272,6 +280,7 @@ export default new Vue({
   },
   methods: {
     call: __call,
+    post: __call,
     setup: __setup
   }
 })
