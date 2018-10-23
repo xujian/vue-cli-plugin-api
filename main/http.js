@@ -21,6 +21,10 @@ let __setup = function (data) {
   __mappings = data.mappings || []
 }
 
+let __hook = function (name, callback) {
+  __config.hooks[name] = callback
+}
+
 let __test = function (path, pattern) {
   let queries = []
   if (path === pattern) { // 当path与pattern完全相同时直接返回
@@ -258,13 +262,12 @@ let __call = (path, options) => {
           result = mapped.hooks.beforeReturn.call(mapped, result)
         }
         resolve(result)
-      } else if (response.code === '-2') { // 处理后台异常
-        // vm.notice('系统繁忙')
-      } else if (response.code === '10') {
-      } else if (response.code === '11') {
-        // 登录态丢失
+      } else if (response.code === '3001') {
+        if (__config.hooks.authExpired) {
+          __config.hooks.authExpired.call()
+        }
       } else {
-        // 服务器错误
+        
       }
     }).catch((error) => {
       reject(error)
@@ -281,6 +284,7 @@ export default new Vue({
   methods: {
     call: __call,
     post: __call,
-    setup: __setup
+    setup: __setup,
+    hook: __hook
   }
 })
